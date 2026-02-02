@@ -11,11 +11,12 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 app.get('/', (req, res) => {
-  res.send("Oh hell yeah");
+    res.send("Oh hell yeah");
 });
 
-app.use("/auth", require("./routes/auth.route.js"));
+app.use("/api/auth", require("./routes/auth.route.js"));
+app.use("/api/domain", require("./routes/domain.route.js"));
 
 app.listen(3000, () => {
-  console.log("Listening on http://localhost:3000");
+    console.log("Listening on http://localhost:3000");
 });
