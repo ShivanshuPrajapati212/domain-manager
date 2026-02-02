@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const connectToMongo = require("./config/mongo.conf.js");
+const { authMiddleware } = require("./middleware/auth.middleware.js");
 
 
 connectToMongo();
@@ -15,7 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.use("/api/auth", require("./routes/auth.route.js"));
-app.use("/api/domain", require("./routes/domain.route.js"));
+app.use("/api/domain", authMiddleware, require("./routes/domain.route.js"));
 
 app.listen(3000, () => {
     console.log("Listening on http://localhost:3000");
