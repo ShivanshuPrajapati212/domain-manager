@@ -21,13 +21,13 @@ const Dashboard = () => {
                         <div className="card card-border h-full bg-base-300" key={e._id}>
                             <div className="card-body flex gap-2 relative">
                                 <div className="flex flex-col">
-                                <div className="text-2xl font-bold">{e.domain}</div> 
+                                <a className="text-2xl font-bold" href={"https://" + e.domain} target="_blank">{e.domain}</a> 
                                 <div className="text-md text-neutral-content font-medium">{e.email}</div>
                                 </div>
-                                {e.subdomains.length !=  0 && <div className="flex gap-2 items-center">Subdomains: {e.subdomains.map((e, i) => {return <span key={i} className="btn btn-sm btn-secondary">{e}</span>})}</div>}
+                                {e.subdomains.length !=  0 && <div className="flex gap-2 items-center">Subdomains: {e.subdomains.map((el, i) => {return <a key={i} href={"https://" + el  + "." + e.domain } target="_blank" className="btn btn-sm btn-secondary">{el}</a>})}</div>}
                                 <div className="text-md font-medium">Status: {e.status == true
                                         ? <span className="text-success font-black">Active</span>
-                                        : <span className="text-red font-black">Expired</span>
+                                        : <span className="text-error font-black">Expired</span>
                                 }</div>
                                 <div className="text-md text-neutral-content font-medium">Provider: <span className="font-black">{e.provider}</span></div>
 
