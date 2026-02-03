@@ -4,6 +4,7 @@ const AuthContext = createContext()
 
 
 // Note: I dont think i need this i just have to store the token and use it every time in domain reqs but i need context for domains
+// Feat: Add Domain Provider in schema 
 
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null)
