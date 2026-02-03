@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDomain } from "../context/domainContext";
 
 
 const Modal = () => {
@@ -8,10 +9,23 @@ const Modal = () => {
     const [provider, setProvider] = useState(null)
     const [expiryDate, setExpiryDate] = useState(null)
     const [status, setStatus] = useState(null)
-    const [error, setError] = useState(null)
 
+    const {addDomain} = useDomain()
 
-    const domainHandler = () => {}
+    const domainHandler = (e) => {
+       e.preventDefault()
+        try {
+            const token = localStorage.getItem("token")
+            if (!token) {
+                console.log("token, ", token)
+                return
+            }
+            document.getElementById("my_modal_2").close()
+           addDomain(token, domain, email, provider, status, expiryDate, subdomains) 
+        } catch (error) {
+           console.log(error)
+        }
+    }
 
     return (
         <dialog id="my_modal_2" className="modal">
@@ -40,12 +54,9 @@ const Modal = () => {
                 </label>
                 <label className="input">
                     <span className="label">Subdomains</span>
-                    <input type="text" name="subdomains" value={subdomains} placeholder="sub1, sub2, sub3" onChange={(e)=> setSubdomains(e.target.value) } required/> 
+                    <input type="text" name="subdomains" value={subdomains} placeholder="sub1,sub2,sub3" onChange={(e)=> setSubdomains(e.target.value) } required/> 
                 </label>
                 <button className="btn btn-primary w-full" type="submit" >Submit</button>
-                {error && 
-                    <div className="bg-error p-3 rounded w-full">Error: {error}</div>
-                }
             </form>
           </div>
           <form method="dialog" className="modal-backdrop">

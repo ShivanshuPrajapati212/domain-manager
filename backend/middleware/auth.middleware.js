@@ -5,7 +5,7 @@ const authMiddleware = async (req, res, next) => {
     try {
         const token = req.get("Authorization") 
         if (!token) {
-            return res.status(401).json({error: "Auth token not provbided"})
+            return res.status(401).json({error: "Auth token not provided"})
         }
         const token_parts = token.split(" "); 
         if (token_parts[0] != "Bearer"){

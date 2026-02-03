@@ -35,7 +35,27 @@ export const DomainProvider = ({children}) => {
         } 
     }
 
-    return <DomainContext.Provider value={{domains, error, getAllDomains}}>{children}</DomainContext.Provider>
+    const addDomain = async (token, domain, email, provider, status, expiryDate, subdomains) => {
+        try {
+            const res = await axios.post(BACKEND_URL.concat("domain/addDomain"), {
+                domain,
+                email, 
+                provider,
+                status: status==="Expired"?false:true,
+                expiryDate: expiryDate,
+                subdomains: subdomains.split(",")
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            })   
+            await getAllDomains(token)
+        } catch (error) {
+           setError(error.response.data.error) 
+        }
+    }
+
+    return <DomainContext.Provider value={{domains, error, setError, getAllDomains, addDomain}}>{children}</DomainContext.Provider>
 }
 
 export const useDomain = () => useContext(DomainContext)
